@@ -19,8 +19,8 @@
   "autoload": {
     "psr-4": {
       "nastradamus39\\slate\\": "",
-      "nastradamus39\\slate\\annotations\\": "annotations",
-      "nastradamus39\\slate\\md\\": "md"
+      "nastradamus39\\slate\\md\\": "md",
+      "nastradamus39\\slate\\annotations\\": "annotations"
     }
   }
 }

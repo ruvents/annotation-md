@@ -2,7 +2,7 @@
 
 namespace nastradamus39\slate\md;
 
-class MdController
+class Controller
 {
 
     public $id;
@@ -13,7 +13,7 @@ class MdController
 
     private $actions=[];
 
-    public function addAction(MdAction $action) {
+    public function addAction(Action $action) {
         $this->actions[]=$action;
     }
 

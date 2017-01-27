@@ -6,9 +6,9 @@ use nastradamus39\slate\annotations\Action;
 use nastradamus39\slate\annotations\Content;
 use nastradamus39\slate\annotations\Controller;
 use nastradamus39\slate\md\Md;
-use nastradamus39\slate\md\MdAction;
-use nastradamus39\slate\md\MdContent;
-use nastradamus39\slate\md\MdController;
+use nastradamus39\slate\md\Action as MdAction;
+use nastradamus39\slate\md\Content as MdContent;
+use nastradamus39\slate\md\Controller as MdController;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 
@@ -33,6 +33,13 @@ class Parser
     }
 
     public function parse() {
+
+        $files = [
+            realpath(__DIR__."/annotations/Controller.php"),
+            realpath(__DIR__."/annotations/Action.php"),
+            realpath(__DIR__."/annotations/Content.php")
+        ];
+        foreach($files as $file) require_once $file;
 
         $_files = array_diff(scandir($this->_parsePath), array('..', '.'));
 

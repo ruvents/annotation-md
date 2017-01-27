@@ -2,7 +2,7 @@
 
 namespace nastradamus39\slate\md;
 
-class MdContent
+class Content
 {
 
     public $id;

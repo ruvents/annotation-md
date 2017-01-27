@@ -15,11 +15,11 @@ class Md
 
     private $controllers=[];
 
-    public function addController(MdController $controller) {
+    public function addController(Controller $controller) {
         $this->controllers[]=$controller;
     }
 
-    public function addContent(MdContent $content){
+    public function addContent(Content $content){
         $this->contents[]=$content;
     }
 

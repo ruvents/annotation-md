@@ -2,7 +2,7 @@
 
 namespace nastradamus39\slate\md;
 
-class MdAction
+class Action
 {
 
     public $id;
