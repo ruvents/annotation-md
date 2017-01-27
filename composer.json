@@ -1,0 +1,24 @@
+{
+  "name": "nastradamus39/annotation-md",
+  "description": "This extension parse phpdoc annotations and generate md document that can be parsed by slate docker",
+  "keywords": ["slate", "annotations", "phpdoc"],
+  "type": "",
+  "license": "BSD-3-Clause",
+  "support": {
+
+  },
+  "authors": [
+    {
+      "name": "Alex Krizhanovsky",
+      "email": "alex@enot.vc"
+    }
+  ],
+  "require": {
+    "doctrine/annotations": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "nastradamus39\\slate\\": ""
+    }
+  }
+}
