@@ -12,7 +12,7 @@
       "name": "Alex Krizhanovsky",
       "email": "alex@enot.vc"
     }
-  ],php
+  ],
   "require": {
     "doctrine/annotations": "*"
   },
