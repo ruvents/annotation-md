@@ -25,12 +25,9 @@ class Action
         $content .= $this->description."\n\n";
 
         /** Request */
-        $content .= "### Request \n";
-        $content .= "`".$this->request."`\n\n";
+        $content .= $this->request->__toString();
 
-        /** Params */
-        $content .= "### Params \n";
-        $content .= $this->params."\n\n";
+        $content .= "\n\n";
 
         return $content;
     }

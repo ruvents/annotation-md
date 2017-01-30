@@ -5,9 +5,13 @@ namespace nastradamus39\slate\md;
 class Md
 {
 
-    public $title = "Main title";
+    public $title = "";
 
-    public $language_tabs = ['json','php'];
+    public $baseUrl = '';
+
+    public $vars = [];
+
+    public $tabs = ['json'];
 
     public $search = true;
 
@@ -39,9 +43,9 @@ class Md
         }
 
         /** Language tabs */
-        if(!empty($this->language_tabs)) {
+        if(!empty($this->tabs)) {
             $content .= "language_tabs:\n";
-            foreach($this->language_tabs as $tab) {
+            foreach($this->tabs as $tab) {
                 $content .= "  - ".$tab."\n";
             }
             $content .= "\n";
@@ -72,6 +76,11 @@ class Md
                 $content .= $c->__toString();
             }
             $content .= "\n";
+        }
+
+        /** Replace all variables */
+        foreach($this->vars as $var=>$val) {
+            $content = preg_replace("/{{".$var."}}/", $val, $content);
         }
 
         return $content;
