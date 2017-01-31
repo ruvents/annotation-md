@@ -2,13 +2,11 @@
 
 namespace nastradamus39\slate;
 
-use nastradamus39\slate\md\MdConfig;
-
-use nastradamus39\slate\annotations\Action;
-use nastradamus39\slate\annotations\Content;
-use nastradamus39\slate\annotations\Controller;
-
+use nastradamus39\slate\annotations\ApiAction;
+use nastradamus39\slate\annotations\ApiContent;
+use nastradamus39\slate\annotations\ApiController;
 use nastradamus39\slate\md\Md;
+use nastradamus39\slate\md\MdConfig;
 use nastradamus39\slate\md\Action as MdAction;
 use nastradamus39\slate\md\Content as MdContent;
 use nastradamus39\slate\md\Controller as MdController;
@@ -46,10 +44,9 @@ class Parser
     public function parse() {
 
         $files = [
-            realpath(__DIR__."/md/Action/Request.php"),
-            realpath(__DIR__."/annotations/Controller.php"),
-            realpath(__DIR__."/annotations/Action.php"),
-            realpath(__DIR__."/annotations/Content.php"),
+            realpath(__DIR__."/annotations/ApiController.php"),
+            realpath(__DIR__."/annotations/ApiAction.php"),
+            realpath(__DIR__."/annotations/ApiContent.php"),
             realpath(__DIR__."/annotations/Action/Request.php"),
             realpath(__DIR__."/annotations/Action/Param.php")
         ];
@@ -97,11 +94,11 @@ class Parser
         /** Parse controller annotations */
         $mdController = new MdController();
         foreach($classAnnotations as $annotation) {
-            if($annotation instanceof Controller) {
+            if($annotation instanceof ApiController) {
                 $mdController->title = $annotation->title;
                 $mdController->description = $annotation->description;
             }
-            if($annotation instanceof Content) {
+            if($annotation instanceof ApiContent) {
                 $mdContent = new MdContent();
                 $mdContent->title = $annotation->title;
                 $mdContent->description = $annotation->description;
@@ -116,7 +113,7 @@ class Parser
 
         foreach($methodsAnnotations as $annotation) {
 
-            if($annotation instanceof Action) {
+            if($annotation instanceof ApiAction) {
 
                 $mdAction = new MdAction();
                 $mdAction->title        = $annotation->title;
@@ -146,7 +143,7 @@ class Parser
 
                 $mdController->addAction($mdAction);
             }
-            if($annotation instanceof Content) {
+            if($annotation instanceof ApiContent) {
                 $mdContent = new MdContent();
                 $mdContent->title = $annotation->title;
                 $mdContent->description = $annotation->description;
