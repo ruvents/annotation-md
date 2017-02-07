@@ -2,6 +2,7 @@
 
 namespace nastradamus39\slate\md\Action;
 
+use api\components\Exception;
 use nastradamus39\slate\md\MdConfig;
 
 class Request
@@ -13,45 +14,82 @@ class Request
 
     public $body;
 
-    public $params;
-
     public $response;
+
+    private $_params;
+
+    public function addParam(Param $param)
+    {
+        $this->_params[] = $param;
+    }
 
     public function __toString()
     {
-        $config = MdConfig::getInstance();
+        $content = $this->_buildResponse();
+        $content .= $this->_buildUrl();
+        $content .= $this->_buildBody();
+        $content .= $this->_buildParams();
 
-        $this->method = empty($this->method) ? 'GET' : $this->method;
+        return $content;
+    }
 
-        if(!empty($this->url) ) {
-            $content = "`".$this->method." ".$config->params['baseUrl'].$this->url."` \n";
-        }
-
+    private function _buildBody()
+    {
+        $content = '';
         if(!empty($this->body)) {
             $content .= "### Body\n";
             $content .= "`".$this->body."`\n";
         }
+        return $content;
+    }
 
-        if(!empty($this->params)) {
-            $content.= "### Parameters\n";
-            $content .= "Название | Тип | Значение по умолчанию | Описание\n";
-            $content .= "-------- | --- | --------------------- | --------\n";
-            foreach($this->params as $param) {
-                $content .= " ".$param['title']." | ".$param['type']." | ".$param['defaultValue']." | ".$param['description']." \n";
+    private function _buildParams()
+    {
+        $content = "";
+        if(!empty($this->_params)) {
+
+            $fields = [];
+            foreach($this->_params as $param) {
+                $fields = array_merge($fields, array_diff($param->fields(), $fields));
             }
-        }
 
-        if(!empty($content)) {
-            $content = "### Request \n".$content;
-        }
+            $content.= "### Parameters\n";
+            $header = [];
+            $separator = [];
+            foreach($fields as $field=>$title) {
+                $header[]=$title;
+                $separator[]=str_repeat("-", mb_strlen($title));
+            }
 
-        if(!empty($this->response)) {
-            $resp = "```json\n";
-            $resp .= $this->response."\n";
-            $resp .= "```\n";
-            $content = $resp.$content;
-        }
+            $content.= implode(' | ', $header)."\n";
+            $content.= implode(' | ', $separator)."\n";
 
+            foreach($this->_params as $param) {
+                $content .= $param->values(array_keys($fields));
+            }
+
+        }
+        return $content;
+    }
+
+    private function _buildResponse()
+    {
+        $content = "";
+        if(!empty($this->response) && !empty($this->response->body)) {
+            $content = "> Ответ: \n\n";
+            $content .= (string)$this->response;
+        }
+        return $content;
+    }
+
+    private function _buildUrl()
+    {
+        $content = "";
+        $config = MdConfig::getInstance();
+        $this->method = empty($this->method) ? 'GET' : $this->method;
+        if(!empty($this->url) ) {
+            $content = "`".$this->method." ".$config->params['baseUrl'].$this->url."` \n";
+        }
         return $content;
     }
 

@@ -12,6 +12,10 @@ use nastradamus39\slate\md\Content as MdContent;
 use nastradamus39\slate\md\Controller as MdController;
 use nastradamus39\slate\md\Action\Request as MdRequest;
 
+use nastradamus39\slate\parser\Content as ContentParser;
+use nastradamus39\slate\parser\Controller as ControllerParser;
+use nastradamus39\slate\parser\Action as ActionParser;
+
 use Doctrine\Common\Annotations\AnnotationReader;
 
 class Parser
@@ -23,8 +27,26 @@ class Parser
 
     private $_md;
 
+    private function bootstrap($dir=null)
+    {
+        if(!is_null($dir) && is_dir($dir)) {
+            array_walk(array_diff(scandir($dir), array('..', '.')), function ($file) use ($dir) {
+                if(is_file($dir.$file)) {
+                    require_once $dir.$file;
+                }
+                if( is_dir($dir.$file)) {
+                    $this->bootstrap($dir.$file."/");
+                }
+            });
+        } else {
+            $this->bootstrap(__DIR__."/annotations/");
+        }
+    }
+
     public function __construct($parsePath, $buildPath, $params = [])
     {
+        $this->bootstrap();
+
         if(empty($parsePath) || empty($buildPath)) {
             throw new \Exception("Empty directory for parse");
         } else {
@@ -41,118 +63,97 @@ class Parser
         }
     }
 
-    public function parse() {
-
-        $files = [
-            realpath(__DIR__."/annotations/ApiController.php"),
-            realpath(__DIR__."/annotations/ApiAction.php"),
-            realpath(__DIR__."/annotations/ApiContent.php"),
-            realpath(__DIR__."/annotations/Action/Request.php"),
-            realpath(__DIR__."/annotations/Action/Param.php")
-        ];
-        foreach($files as $file) require_once $file;
-
-        $_files = array_diff(scandir($this->_parsePath), array('..', '.'));
-
-        foreach( $_files as $file) {
-            if( is_file($this->_parsePath.DIRECTORY_SEPARATOR.$file ) && $this->_isPhpFile($file) ) {
-                $ctrl = $this->_parseFile($file);
-                if(!empty($ctrl)) {
-                    $this->_md->addController($ctrl);
+    public function parse($dir=null) {
+        if(is_null($dir)) {
+            $this->parse($this->_parsePath);
+            $this->_md->save($this->_buildPath.DIRECTORY_SEPARATOR."index.html.md");
+        } else {
+            $_files = array_diff(scandir($dir), array('..', '.'));
+            foreach( $_files as $file) {
+                if( is_file($dir.DIRECTORY_SEPARATOR.$file ) && $this->_isPhpFile($file) ) {
+                    $this->_parseFile($dir.DIRECTORY_SEPARATOR.$file);
+                }
+                if(is_dir($dir.DIRECTORY_SEPARATOR.$file)) {
+                    $this->parse($dir.DIRECTORY_SEPARATOR.$file);
                 }
             }
         }
-
-        $this->_md->save($this->_buildPath.DIRECTORY_SEPARATOR."index.html.md");
     }
 
     private function _parseFile($file) {
 
-        require_once $this->_parsePath.DIRECTORY_SEPARATOR.$file;
-        $className = explode(".",$file)[0];
+        $className = '';
+        if(is_file($file)) {
+            require_once $file;
+            $className = $this->_getClassName($file);
+        }
 
         if(class_exists($className)) {
 
             $classAnnotations = $this->_fetchClassAnnotations($className);
-            $methodsAnnotations = $this->_fetchMethodsAnnotations($className);
+            $methodAnnotation = $this->_fetchMethodsAnnotations($className);
 
-            if($classAnnotations){
-                $mdController = $this->_parseClassAnnotations($classAnnotations);
-                $mdController = $this->_parseMethodAnnotations($mdController, $methodsAnnotations);
-                return $mdController;
-            } else {
-                return null;
-            }
-
-        } else {
-            return null;
-        }
-    }
-
-    private function _parseClassAnnotations($classAnnotations)
-    {
-        /** Parse controller annotations */
-        $mdController = new MdController();
-        foreach($classAnnotations as $annotation) {
-            if($annotation instanceof ApiController) {
-                $mdController->title = $annotation->title;
-                $mdController->description = $annotation->description;
-            }
-            if($annotation instanceof ApiContent) {
-                $mdContent = new MdContent();
-                $mdContent->title = $annotation->title;
-                $mdContent->description = $annotation->description;
-                $this->_md->addContent($mdContent);
-            }
-        }
-        return $mdController;
-    }
-
-    private function _parseMethodAnnotations(MdController $mdController, $methodsAnnotations)
-    {
-
-        foreach($methodsAnnotations as $annotation) {
-
-            if($annotation instanceof ApiAction) {
-
-                $mdAction = new MdAction();
-                $mdAction->title        = $annotation->title;
-                $mdAction->description  = $annotation->description;
-
-                if(!empty($annotation->request)) {
-                    $mdRequest = new MdRequest();
-                    $mdRequest->method  = $annotation->request->method;
-                    $mdRequest->url     = $annotation->request->url;
-                    $mdRequest->body    = $annotation->request->body;
-                    $mdRequest->response= $annotation->request->response;
-
-                    if(!empty($annotation->request->params)) {
-                        $mdRequest->params=[];
-                        foreach ($annotation->request->params as $p) {
-                            $param=[
-                                'title'         => $p->title,
-                                'type'          => $p->type,
-                                'defaultValue'  => $p->defaultValue,
-                                'description'   => $p->description
-                            ];
-                            $mdRequest->params[]=$param;
-                        }
+            // parse class annotations
+            if(!empty($classAnnotations)) {
+                foreach ($classAnnotations as $annotation) {
+                    if($annotation instanceof ApiController) {
+                        $md = (new ControllerParser())->parse($annotation);
+                        $this->_md->addController($md);
                     }
-                    $mdAction->request=$mdRequest;
+                    if($annotation instanceof ApiContent) {
+                        $md = (new ContentParser())->parse($annotation);
+                        $this->_md->addContent($md);
+                    }
                 }
-
-                $mdController->addAction($mdAction);
             }
-            if($annotation instanceof ApiContent) {
-                $mdContent = new MdContent();
-                $mdContent->title = $annotation->title;
-                $mdContent->description = $annotation->description;
-                $this->_md->addContent($mdContent);
+
+            // parse methods annotations
+            if(!empty($methodAnnotation)) {
+                foreach ($methodAnnotation as $annotation) {
+                    if($annotation instanceof ApiAction) {
+                        $md = (new ActionParser())->parse($annotation);
+                        $this->_md->addAction($md);
+                    }
+                }
+            }
+
+        }
+    }
+
+    private function _getClassName($path_to_file)
+    {
+        $contents = file_get_contents($path_to_file);
+        $namespace = $class = "";
+        $getting_namespace = $getting_class = false;
+
+        foreach (token_get_all($contents) as $token) {
+
+            if (is_array($token) && $token[0] == T_NAMESPACE) {
+                $getting_namespace = true;
+            }
+
+            if (is_array($token) && $token[0] == T_CLASS) {
+                $getting_class = true;
+            }
+
+            if ($getting_namespace === true) {
+                if(is_array($token) && in_array($token[0], [T_STRING, T_NS_SEPARATOR])) {
+                    $namespace .= $token[1];
+                }
+                else if ($token === ';') {
+                    $getting_namespace = false;
+                }
+            }
+
+            if ($getting_class === true) {
+                if(is_array($token) && $token[0] == T_STRING) {
+                    $class = $token[1];
+                    break;
+                }
             }
         }
 
-        return $mdController;
-
+        return $namespace ? $namespace . '\\' . $class : $class;
     }
 
     private function _fetchMethodsAnnotations($className)

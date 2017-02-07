@@ -7,6 +7,8 @@ class Action
 
     public $id;
 
+    public $controller;
+
     public $title = "";
 
     public $description = "";
@@ -17,6 +19,10 @@ class Action
 
     public function __toString()
     {
+
+        $this->description = nl2br($this->description);
+        $this->description=str_replace("  ","&nbsp;&nbsp;",$this->description);
+
         $content = "";
         /** title */
         $content .= "## ".$this->id.". ".$this->title."\n";
@@ -25,7 +31,9 @@ class Action
         $content .= $this->description."\n\n";
 
         /** Request */
-        $content .= $this->request->__toString();
+        if(!empty($this->request)) {
+            $content .= (string)$this->request;
+        }
 
         $content .= "\n\n";
 

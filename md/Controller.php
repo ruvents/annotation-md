@@ -7,6 +7,8 @@ class Controller
 
     public $id;
 
+    public $controller;
+
     public $title;
 
     public $description;
@@ -19,6 +21,9 @@ class Controller
 
     public function __toString()
     {
+        $this->description = nl2br($this->description);
+        $this->description=str_replace("  ","&nbsp;&nbsp;",$this->description);
+
         $content = "";
         $content .= "# ".$this->id.". ".$this->title."\n\n";
 
@@ -27,11 +32,12 @@ class Controller
 
         if(!empty($this->actions)) {
             $i=1;
-            foreach( $this->actions as $action) {
+            foreach( $this->actions as $action ) {
                 $action->id = $this->id.".".strval($i++);
-                $content .= $action->__toString();
+                $content .= (string)$action;
             }
         }
+
 
         return $content;
     }

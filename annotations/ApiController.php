@@ -8,6 +8,8 @@ namespace nastradamus39\slate\annotations;
  */
 class ApiController
 {
+    public $controller;
+
     public $title;
 
     public $description;

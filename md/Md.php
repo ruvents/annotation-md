@@ -20,11 +20,16 @@ class Md
     private $controllers=[];
 
     public function addController(Controller $controller) {
-        $this->controllers[]=$controller;
+        $this->controllers[md5($controller->controller)]=$controller;
     }
 
     public function addContent(Content $content){
         $this->contents[]=$content;
+    }
+
+    public function addAction(Action $action)
+    {
+        $this->controllers[md5($action->controller)]->addAction($action);
     }
 
     public function save($file) {
@@ -58,22 +63,22 @@ class Md
 
         $content .= "---\n";
 
-        /** Controllers */
-        if(!empty($this->controllers)) {
-            $content .= "\n";
-            foreach($this->controllers as $c){
-                $c->id = strval($i++);
-                $content .= $c->__toString();
-            }
-            $content .= "\n";
-        }
-
         /** Contents blocks */
         if(!empty($this->contents)) {
             $content .= "\n";
             foreach($this->contents as $c){
                 $c->id = strval($i++);
                 $content .= $c->__toString();
+            }
+            $content .= "\n";
+        }
+
+        /** Controllers */
+        if(!empty($this->controllers)) {
+            $content .= "\n";
+            foreach($this->controllers as $c){
+                $c->id = strval($i++);
+                $content .= (string)$c;
             }
             $content .= "\n";
         }
