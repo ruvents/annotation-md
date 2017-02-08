@@ -11,11 +11,13 @@ class Md
 
     public $vars = [];
 
-    public $tabs = ['json'];
+    public $tabs = ['json', 'javascript', 'php', 'shell', 'ruby', 'python'];
 
-    public $search = true;
+    public $search = false;
 
     public $contents = [];
+
+    public $errors = [];
 
     private $controllers=[];
 
@@ -25,6 +27,10 @@ class Md
 
     public function addContent(Content $content){
         $this->contents[]=$content;
+    }
+
+    public function addError(Error $error){
+        $this->errors[]=$error;
     }
 
     public function addAction(Action $action)
@@ -38,7 +44,8 @@ class Md
 
     public function __toString()
     {
-        $i=1;
+        MdConfig::$lastInsertMenu = 1;
+
         $content = "";
         $content .= "---\n";
 
@@ -67,7 +74,7 @@ class Md
         if(!empty($this->contents)) {
             $content .= "\n";
             foreach($this->contents as $c){
-                $c->id = strval($i++);
+                $c->id = strval(MdConfig::$lastInsertMenu++);
                 $content .= $c->__toString();
             }
             $content .= "\n";
@@ -77,10 +84,16 @@ class Md
         if(!empty($this->controllers)) {
             $content .= "\n";
             foreach($this->controllers as $c){
-                $c->id = strval($i++);
+                $c->id = strval(MdConfig::$lastInsertMenu++);
                 $content .= (string)$c;
             }
             $content .= "\n";
+        }
+
+
+        /** Errors */
+        if(!empty($this->errors)) {
+            $content .= Error::toString($this->errors);
         }
 
         /** Replace all variables */

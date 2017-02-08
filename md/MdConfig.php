@@ -7,6 +7,8 @@ class MdConfig
 
     public $params = [];
 
+    public static $lastInsertMenu;
+
     private static $_instance = null;
 
     private function __construct() {

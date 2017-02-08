@@ -23,9 +23,10 @@ class Response
             $this->body = json_encode($resp, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
         }
 
-        $resp = "```json\n";
+        $resp = "\n";
+        $resp .= "```json\n";
         $resp .= $this->body."\n";
-        $resp .= "```\n";
+        $resp .= "```\n\n";
 
         return $resp;
     }

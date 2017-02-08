@@ -17,6 +17,8 @@ class Action
 
     public $params = "";
 
+    public $samples = [];
+
     public function __toString()
     {
 
@@ -33,6 +35,13 @@ class Action
         /** Request */
         if(!empty($this->request)) {
             $content .= (string)$this->request;
+        }
+
+        /** Samples */
+        if (!empty($this->samples)) {
+            foreach ($this->samples as $sample) {
+                $content .= "\n".(string)$sample."\n";
+            }
         }
 
         $content .= "\n\n";

@@ -5,14 +5,12 @@ namespace nastradamus39\slate;
 use nastradamus39\slate\annotations\ApiAction;
 use nastradamus39\slate\annotations\ApiContent;
 use nastradamus39\slate\annotations\ApiController;
+use nastradamus39\slate\annotations\ApiError;
 use nastradamus39\slate\md\Md;
 use nastradamus39\slate\md\MdConfig;
 use nastradamus39\slate\md\Action as MdAction;
-use nastradamus39\slate\md\Content as MdContent;
-use nastradamus39\slate\md\Controller as MdController;
-use nastradamus39\slate\md\Action\Request as MdRequest;
-
 use nastradamus39\slate\parser\Content as ContentParser;
+use nastradamus39\slate\parser\Error as ErrorParser;
 use nastradamus39\slate\parser\Controller as ControllerParser;
 use nastradamus39\slate\parser\Action as ActionParser;
 
@@ -103,6 +101,10 @@ class Parser
                     if($annotation instanceof ApiContent) {
                         $md = (new ContentParser())->parse($annotation);
                         $this->_md->addContent($md);
+                    }
+                    if($annotation instanceof ApiError) {
+                        $md = (new ErrorParser())->parse($annotation);
+                        $this->_md->addError($md);
                     }
                 }
             }

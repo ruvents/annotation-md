@@ -36,5 +36,10 @@ class ApiAction
      */
     public $params;
 
+    /**
+     * @var array nastradamus39\slate\annotations\Action\Sample
+     */
+    public $samples;
+
 }
 

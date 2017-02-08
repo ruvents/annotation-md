@@ -76,7 +76,6 @@ class Request
     {
         $content = "";
         if(!empty($this->response) && !empty($this->response->body)) {
-            $content = "> Ответ: \n\n";
             $content .= (string)$this->response;
         }
         return $content;
