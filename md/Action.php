@@ -32,17 +32,18 @@ class Action
         /** description */
         $content .= $this->description."\n\n";
 
-        /** Request */
-        if(!empty($this->request)) {
-            $content .= (string)$this->request;
-        }
-
         /** Samples */
         if (!empty($this->samples)) {
             foreach ($this->samples as $sample) {
                 $content .= "\n".(string)$sample."\n";
             }
         }
+
+        /** Request */
+        if(!empty($this->request)) {
+            $content .= (string)$this->request;
+        }
+
 
         $content .= "\n\n";
 

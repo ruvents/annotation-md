@@ -6,6 +6,7 @@ use nastradamus39\slate\annotations\ApiAction;
 use nastradamus39\slate\annotations\ApiContent;
 use nastradamus39\slate\annotations\ApiController;
 use nastradamus39\slate\annotations\ApiError;
+use nastradamus39\slate\annotations\ApiObject;
 use nastradamus39\slate\md\Md;
 use nastradamus39\slate\md\MdConfig;
 use nastradamus39\slate\md\Action as MdAction;
@@ -13,6 +14,7 @@ use nastradamus39\slate\parser\Content as ContentParser;
 use nastradamus39\slate\parser\Error as ErrorParser;
 use nastradamus39\slate\parser\Controller as ControllerParser;
 use nastradamus39\slate\parser\Action as ActionParser;
+use nastradamus39\slate\parser\Obj as ObjParser;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 
@@ -101,6 +103,10 @@ class Parser
                     if($annotation instanceof ApiContent) {
                         $md = (new ContentParser())->parse($annotation);
                         $this->_md->addContent($md);
+                    }
+                    if($annotation instanceof ApiObject) {
+                        $md = (new ObjParser())->parse($annotation);
+                        $this->_md->addObject($md);
                     }
                     if($annotation instanceof ApiError) {
                         $md = (new ErrorParser())->parse($annotation);

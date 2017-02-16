@@ -47,6 +47,7 @@ class Request
                 $mdParam->title = $param->title;
                 $mdParam->description = $param->description;
                 $mdParam->defaultValue = $param->defaultValue;
+                $mdParam->mandatory = $param->mandatory;
                 $md->addParam($mdParam);
             }
         }

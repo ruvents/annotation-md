@@ -15,32 +15,78 @@ class Param
 
     public $description;
 
-    public function values($fields)
+    public $mandatory;
+
+    static $fields = [
+        'title'         => 'Название',
+        'type'          => 'Тип',
+        'description'   => 'Описание',
+        'defaultValue'  => 'Значение по умолчанию',
+        'mandatory'     => 'Обязательно'
+    ];
+
+    public function values()
     {
-
         $values = [];
+        foreach($this->fields as $key=>$title) {
+            if (!empty($this->$key) ) {
+                $values[$key]=$title;
+            }
+        }
+        return $values;
+    }
 
-        if(in_array('title', $fields))          $values[] = $this->title;
-        if(in_array('type', $fields))           $values[] = $this->type;
-        if(in_array('defaultValue', $fields))   $values[] = $this->defaultValue;
-        if(in_array('description', $fields))    $values[] = $this->description;
+    public static function table($params = [])
+    {
+        $content = "";
+        $fields=[];
+        $allFields = self::$fields;
+        if(sizeof($params)) {
 
-        $content = implode(" | ", $values)."\n";
+            // столбцы таблицы
+            foreach (self::$fields as $field=>$fieldTitle) {
+                foreach($params as $param) {
+                    if( !empty($param->$field) && !in_array($field, $fields) ) {
+                        $fields[]=$field;
+                    }
+                }
+            }
+
+            // шапка таблицы.
+            $th = [];
+            $_th=[];
+            array_walk($fields, function ($a) use ($allFields, &$th, &$_th) {
+                $th[]=$allFields[$a];
+                $_th[]=str_repeat("-", mb_strlen($allFields[$a]));
+            });
+
+            // строки таблицы
+            $rows = [];
+            foreach ($params as $param){
+                $row=[];
+                foreach($fields as $field ) {
+                    $row[$field] = !empty($param->$field) ? $param->$field : '';
+                }
+                $rows[] = implode(" | ", $row);
+            }
+
+            $content .= implode(" | ", $th)."\n";
+            $content .= implode(" | ", $_th)."\n";
+            $content .= implode("\n", $rows)."\n";
+        }
+
         return $content;
     }
 
-
-    public function fields()
+    public static function assocArray($params = [])
     {
-
-        $fields = [];
-        if(!empty($this->title))        $fields['title']='Название';
-        if(!empty($this->type))         $fields['type']='Тип';
-        if(!empty($this->description))  $fields['description']='Описание';
-        if(!empty($this->defaultValue)) $fields['defaultValue']='Значение по умолчанию';
-
-        return $fields;
-
+        $_params = [];
+        if(sizeof($params)) {
+            foreach ($params as $param) {
+                $_params[$param->title]="value";
+            }
+        }
+        return $_params;
     }
 
 }

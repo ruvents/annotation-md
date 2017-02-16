@@ -11,25 +11,35 @@ class Md
 
     public $vars = [];
 
-    public $tabs = ['json', 'javascript', 'php', 'shell', 'ruby', 'python'];
+    public $tabs = ['shell: cURL', 'php' ];
 
     public $search = false;
 
     public $contents = [];
 
+    public $objects = [];
+
     public $errors = [];
 
     private $controllers=[];
 
-    public function addController(Controller $controller) {
+    public function addController(Controller $controller)
+    {
         $this->controllers[md5($controller->controller)]=$controller;
     }
 
-    public function addContent(Content $content){
+    public function addContent(Content $content)
+    {
         $this->contents[]=$content;
     }
 
-    public function addError(Error $error){
+    public function addObject(Obj $obj)
+    {
+        $this->objects[]=$obj;
+    }
+
+    public function addError(Error $error)
+    {
         $this->errors[]=$error;
     }
 
@@ -45,6 +55,8 @@ class Md
     public function __toString()
     {
         MdConfig::$lastInsertMenu = 1;
+
+        $_vars=[];
 
         $content = "";
         $content .= "---\n";
@@ -80,6 +92,21 @@ class Md
             $content .= "\n";
         }
 
+        /** Objects description block */
+        if(!empty($this->objects)) {
+            $content .= "# ".MdConfig::$lastInsertMenu.". Описание объектов\n\n";
+            $i=1;
+            foreach($this->objects as $c){
+                $c->id = strval(MdConfig::$lastInsertMenu.".".$i++);
+                $content .= $c->__toString();
+                $objCode = '{$'.$c->code.'}';
+                $objLink = 'LNK['.$c->title.'](#'.str_replace(".","-", $c->id).')';
+                $_vars[$objCode]=$objLink;
+            }
+            $content .= "\n";
+            MdConfig::$lastInsertMenu++;
+        }
+
         /** Controllers */
         if(!empty($this->controllers)) {
             $content .= "\n";
@@ -90,7 +117,6 @@ class Md
             $content .= "\n";
         }
 
-
         /** Errors */
         if(!empty($this->errors)) {
             $content .= Error::toString($this->errors);
@@ -100,6 +126,13 @@ class Md
         foreach($this->vars as $var=>$val) {
             $content = preg_replace("/{{".$var."}}/", $val, $content);
         }
+        foreach($_vars as $var=>$val) {
+            $content = str_replace($var, $val, $content);
+        }
+
+        // script for replace links
+        $content .= "\n\n";
+        $content .= '<script>$(document).ready(function(){$("pre").each(function(a,b){var c=$(b).html();c=c.replace(/LNK\[([^\]\n]+)\]\(([^\)\n]+)\)/g,\'<a href="$2">$1</a>\'),$(b).html(c)})});</script>';
 
         return $content;
     }

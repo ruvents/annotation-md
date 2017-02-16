@@ -1,13 +1,19 @@
 <?php
 
-namespace nastradamus39\slate\annotations\Action;
+namespace nastradamus39\slate\annotations;
 
 /**
  * @Annotation
  * @Target("ALL")
  */
-class Param
+class ApiObject
 {
+    /**
+     * @var string
+     * @Required
+     */
+    public $code;
+
     /**
      * @var string
      * @Required
@@ -17,22 +23,16 @@ class Param
     /**
      * @var string
      */
-    public $type;
+    public $json;
 
     /**
      * @var string
-     */
-    public $defaultValue;
-
-    /**
-     * @var string
+     * @Required
      */
     public $description;
 
-    /**
-     * @var string
-     * @Enum({"Y", "N"})
-     */
-    public $mandatory;
+
+    public $params;
+
 }
 

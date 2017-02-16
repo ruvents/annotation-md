@@ -25,11 +25,11 @@ class Request
 
     public function __toString()
     {
-        $content = $this->_buildResponse();
+        $content = $this->_buildCurlString();
+        $content .= $this->_buildResponse();
         $content .= $this->_buildUrl();
         $content .= $this->_buildBody();
         $content .= $this->_buildParams();
-
         return $content;
     }
 
@@ -47,27 +47,8 @@ class Request
     {
         $content = "";
         if(!empty($this->_params)) {
-
-            $fields = [];
-            foreach($this->_params as $param) {
-                $fields = array_merge($fields, array_diff($param->fields(), $fields));
-            }
-
             $content.= "### Parameters\n";
-            $header = [];
-            $separator = [];
-            foreach($fields as $field=>$title) {
-                $header[]=$title;
-                $separator[]=str_repeat("-", mb_strlen($title));
-            }
-
-            $content.= implode(' | ', $header)."\n";
-            $content.= implode(' | ', $separator)."\n";
-
-            foreach($this->_params as $param) {
-                $content .= $param->values(array_keys($fields));
-            }
-
+            $content.= Param::table($this->_params);
         }
         return $content;
     }
@@ -90,6 +71,15 @@ class Request
             $content = "`".$this->method." ".$config->params['baseUrl'].$this->url."` \n";
         }
         return $content;
+    }
+
+    private function _buildCurlString()
+    {
+        $config = MdConfig::getInstance();
+        $curl = "\n```shell\n";
+        $curl .= "$ curl -X ".$this->method." ".$config->params['baseUrl'].$this->url."\n";
+        $curl .= "```\n\n";
+        return $curl;
     }
 
 }
