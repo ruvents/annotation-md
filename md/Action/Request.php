@@ -25,8 +25,7 @@ class Request
 
     public function __toString()
     {
-        $content = $this->_buildCurlString();
-        $content .= $this->_buildResponse();
+        $content = $this->_buildResponse();
         $content .= $this->_buildUrl();
         $content .= $this->_buildBody();
         $content .= $this->_buildParams();

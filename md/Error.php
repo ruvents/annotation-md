@@ -13,7 +13,7 @@ class Error
 
     public function __toString()
     {
-        $content = "d,mfsdfs";
+        $content = "";
         return $content;
     }
 
