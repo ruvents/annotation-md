@@ -1,9 +1,9 @@
 <?php
 
-namespace nastradamus39\slate\parser;
+namespace ruvents\slate\parser;
 
-use nastradamus39\slate\annotations\ApiError;
-use nastradamus39\slate\md\Error as MdError;
+use ruvents\slate\annotations\ApiError;
+use ruvents\slate\md\Error as MdError;
 
 class Error
 {

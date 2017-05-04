@@ -1,5 +1,5 @@
 {
-  "name": "nastradamus39/annotation-md",
+  "name": "ruvents/annotation-md",
   "description": "This extension parse phpdoc annotations and generate md document that can be parsed by slate docker",
   "keywords": ["slate", "annotations", "phpdoc"],
   "type": "",
@@ -18,10 +18,10 @@
   },
   "autoload": {
     "psr-4": {
-      "nastradamus39\\slate\\": "",
-      "nastradamus39\\slate\\md\\": "md",
-      "nastradamus39\\slate\\md\\Action\\": "md/Action",
-      "nastradamus39\\slate\\annotations\\": "annotations"
+      "ruvents\\slate\\": "",
+      "ruvents\\slate\\md\\": "md",
+      "ruvents\\slate\\md\\Action\\": "md/Action",
+      "ruvents\\slate\\annotations\\": "annotations"
     }
   }
 }

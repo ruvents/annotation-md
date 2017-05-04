@@ -1,6 +1,6 @@
 <?php
 
-namespace nastradamus39\slate\annotations;
+namespace ruvents\slate\annotations;
 
 /**
  * @Annotation
@@ -27,17 +27,17 @@ class ApiAction
     public $description;
 
     /**
-     * @var nastradamus39\slate\annotations\Action\Request
+     * @var ruvents\slate\annotations\Action\Request
      */
     public $request;
 
     /**
-     * @var array nastradamus39\slate\annotations\Action\Param
+     * @var array ruvents\slate\annotations\Action\Param
      */
     public $params;
 
     /**
-     * @var array nastradamus39\slate\annotations\Action\Sample
+     * @var array ruvents\slate\annotations\Action\Sample
      */
     public $samples;
 

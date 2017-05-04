@@ -1,9 +1,9 @@
 <?php
 
-namespace nastradamus39\slate\parser;
+namespace ruvents\slate\parser;
 
-use nastradamus39\slate\annotations\ApiContent;
-use nastradamus39\slate\md\Content as MdContent;
+use ruvents\slate\annotations\ApiContent;
+use ruvents\slate\md\Content as MdContent;
 
 class Content
 {

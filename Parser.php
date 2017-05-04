@@ -1,20 +1,20 @@
 <?php
 
-namespace nastradamus39\slate;
+namespace ruvents\slate;
 
-use nastradamus39\slate\annotations\ApiAction;
-use nastradamus39\slate\annotations\ApiContent;
-use nastradamus39\slate\annotations\ApiController;
-use nastradamus39\slate\annotations\ApiError;
-use nastradamus39\slate\annotations\ApiObject;
-use nastradamus39\slate\md\Md;
-use nastradamus39\slate\md\MdConfig;
-use nastradamus39\slate\md\Action as MdAction;
-use nastradamus39\slate\parser\Content as ContentParser;
-use nastradamus39\slate\parser\Error as ErrorParser;
-use nastradamus39\slate\parser\Controller as ControllerParser;
-use nastradamus39\slate\parser\Action as ActionParser;
-use nastradamus39\slate\parser\Obj as ObjParser;
+use ruvents\slate\annotations\ApiAction;
+use ruvents\slate\annotations\ApiContent;
+use ruvents\slate\annotations\ApiController;
+use ruvents\slate\annotations\ApiError;
+use ruvents\slate\annotations\ApiObject;
+use ruvents\slate\md\Md;
+use ruvents\slate\md\MdConfig;
+use ruvents\slate\md\Action as MdAction;
+use ruvents\slate\parser\Content as ContentParser;
+use ruvents\slate\parser\Error as ErrorParser;
+use ruvents\slate\parser\Controller as ControllerParser;
+use ruvents\slate\parser\Action as ActionParser;
+use ruvents\slate\parser\Obj as ObjParser;
 
 use Doctrine\Common\Annotations\AnnotationReader;
 

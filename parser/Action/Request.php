@@ -1,13 +1,13 @@
 <?php
 
-namespace nastradamus39\slate\parser\Action;
+namespace ruvents\slate\parser\Action;
 
-use nastradamus39\slate\annotations\Action\Request as RequestAnnotation;
-use nastradamus39\slate\annotations\Action\Response;
+use ruvents\slate\annotations\Action\Request as RequestAnnotation;
+use ruvents\slate\annotations\Action\Response;
 
-use nastradamus39\slate\md\Action\Param as MdParam;
-use nastradamus39\slate\md\Action\Request as MdRequest;
-use nastradamus39\slate\md\Action\Response as MdResponse;
+use ruvents\slate\md\Action\Param as MdParam;
+use ruvents\slate\md\Action\Request as MdRequest;
+use ruvents\slate\md\Action\Response as MdResponse;
 
 class Request
 {

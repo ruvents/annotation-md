@@ -1,9 +1,9 @@
 <?php
 
-namespace nastradamus39\slate\parser;
+namespace ruvents\slate\parser;
 
-use nastradamus39\slate\annotations\ApiController;
-use nastradamus39\slate\md\Controller as MdController;
+use ruvents\slate\annotations\ApiController;
+use ruvents\slate\md\Controller as MdController;
 
 class Controller
 {

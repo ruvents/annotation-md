@@ -1,6 +1,6 @@
 <?php
 
-namespace nastradamus39\slate\annotations\Action;
+namespace ruvents\slate\annotations\Action;
 
 /**
  * @Annotation
@@ -26,12 +26,12 @@ class Request
     public $body;
 
     /**
-     * @var array nastradamus39\slate\annotations\Action\Param
+     * @var array ruvents\slate\annotations\Action\Param
      */
     public $params;
 
     /**
-     * @var nastradamus39\slate\annotations\Action\Response
+     * @var ruvents\slate\annotations\Action\Response
      */
     public $response;
 }

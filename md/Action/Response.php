@@ -1,6 +1,6 @@
 <?php
 
-namespace nastradamus39\slate\md\Action;
+namespace ruvents\slate\md\Action;
 
 class Response
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace nastradamus39\slate\annotations\Action;
+namespace ruvents\slate\annotations\Action;
 
 /**
  * @Annotation

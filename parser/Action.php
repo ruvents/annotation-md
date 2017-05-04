@@ -1,11 +1,11 @@
 <?php
 
-namespace nastradamus39\slate\parser;
+namespace ruvents\slate\parser;
 
-use nastradamus39\slate\annotations\ApiAction;
-use nastradamus39\slate\md\Action as MdAction;
-use nastradamus39\slate\parser\Action\Request as RequestParser;
-use nastradamus39\slate\md\Action\Sample;
+use ruvents\slate\annotations\ApiAction;
+use ruvents\slate\md\Action as MdAction;
+use ruvents\slate\parser\Action\Request as RequestParser;
+use ruvents\slate\md\Action\Sample;
 
 class Action
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace nastradamus39\slate\md\Action;
+namespace ruvents\slate\md\Action;
 
-use nastradamus39\slate\md\MdConfig;
+use ruvents\slate\md\MdConfig;
 
 class Param
 {

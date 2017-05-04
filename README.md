@@ -8,7 +8,7 @@
 Установка
 ------------
 
-`composer require nastradamus39/annotation-md`
+`composer require ruvents/annotation-md`
 
 Использование
 -------------

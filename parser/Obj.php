@@ -1,9 +1,9 @@
 <?php
 
-namespace nastradamus39\slate\parser;
+namespace ruvents\slate\parser;
 
-use nastradamus39\slate\annotations\ApiObject;
-use nastradamus39\slate\md\Obj as MdObj;
+use ruvents\slate\annotations\ApiObject;
+use ruvents\slate\md\Obj as MdObj;
 
 class Obj
 {

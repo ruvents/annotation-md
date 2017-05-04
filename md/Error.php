@@ -1,6 +1,6 @@
 <?php
 
-namespace nastradamus39\slate\md;
+namespace ruvents\slate\md;
 
 class Error
 {
