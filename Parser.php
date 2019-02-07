@@ -52,7 +52,7 @@ class Parser
             $this->parse($this->_parsePath);
             $this->_md->save($this->_buildPath.\DIRECTORY_SEPARATOR.'index.html.md');
         } else {
-            $_files = array_diff(scandir($dir, SCANDIR_SORT_NONE), ['..', '.']);
+            $_files = array_diff(scandir($dir, SCANDIR_SORT_ASCENDING), ['..', '.']);
             foreach ($_files as $file) {
                 if (is_file($dir.\DIRECTORY_SEPARATOR.$file) && $this->_isPhpFile($file)) {
                     $this->_parseFile($dir.\DIRECTORY_SEPARATOR.$file);
@@ -67,7 +67,7 @@ class Parser
     private function bootstrap($dir = null)
     {
         if (null !== $dir && is_dir($dir)) {
-            foreach (array_diff(scandir($dir, SCANDIR_SORT_NONE), ['..', '.']) as $file) {
+            foreach (array_diff(scandir($dir, SCANDIR_SORT_ASCENDING), ['..', '.']) as $file) {
                 if (is_file($dir.$file)) {
                     require_once $dir.$file;
                 } elseif (is_dir($dir.$file)) {
