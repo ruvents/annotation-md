@@ -1,12 +1,9 @@
 {
   "name": "ruvents/annotation-md",
-  "description": "This extension parse phpdoc annotations and generate md document that can be parsed by slate docker",
+  "description": "This library parses phpdoc annotations and generates md document that can be parsed by slate",
   "keywords": ["slate", "annotations", "phpdoc"],
-  "type": "",
-  "license": "BSD-3-Clause",
-  "support": {
-
-  },
+  "type": "library",
+  "license": "MIT",
   "authors": [
     {
       "name": "Alex Krizhanovsky",
@@ -14,14 +11,11 @@
     }
   ],
   "require": {
-    "doctrine/annotations": "*"
+    "doctrine/annotations": "^1.6.0"
   },
   "autoload": {
     "psr-4": {
-      "ruvents\\slate\\": "",
-      "ruvents\\slate\\md\\": "md",
-      "ruvents\\slate\\md\\Action\\": "md/Action",
-      "ruvents\\slate\\annotations\\": "annotations"
+      "ruvents\\slate\\": ""
     }
   }
 }
