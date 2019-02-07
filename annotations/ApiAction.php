@@ -2,10 +2,6 @@
 
 namespace ruvents\slate\annotations;
 
-use ruvents\slate\annotations\Action\Param;
-use ruvents\slate\annotations\Action\Request;
-use ruvents\slate\annotations\Action\Sample;
-
 /**
  * @Annotation
  * @Target("METHOD")
