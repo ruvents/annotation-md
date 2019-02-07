@@ -20,4 +20,3 @@ class ApiContent
      */
     public $description;
 }
-

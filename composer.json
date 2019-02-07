@@ -1,21 +1,29 @@
 {
-  "name": "ruvents/annotation-md",
-  "description": "This library parses phpdoc annotations and generates md document that can be parsed by slate",
-  "keywords": ["slate", "annotations", "phpdoc"],
-  "type": "library",
-  "license": "MIT",
-  "authors": [
-    {
-      "name": "Alex Krizhanovsky",
-      "email": "alex@enot.vc"
+    "name": "ruvents/annotation-md",
+    "description": "This library parses phpdoc annotations and generates md document that can be parsed by slate",
+    "type": "library",
+    "keywords": ["slate", "annotations", "phpdoc"],
+    "license": "MIT",
+    "authors": [
+        {"name": "Alex Krizhanovsky", "email": "alex@enot.vc"}
+    ],
+    "require": {
+        "php": "^5.6 || ^7.0",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "doctrine/annotations": "^1.6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "ruvents\\slate\\": ""
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "0.1-dev"
+        }
     }
-  ],
-  "require": {
-    "doctrine/annotations": "^1.6.0"
-  },
-  "autoload": {
-    "psr-4": {
-      "ruvents\\slate\\": ""
-    }
-  }
 }

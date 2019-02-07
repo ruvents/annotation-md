@@ -4,7 +4,6 @@ namespace ruvents\slate\md;
 
 class Error
 {
-
     public $id;
 
     public $code;
@@ -13,15 +12,15 @@ class Error
 
     public function __toString()
     {
-        $content = "";
+        $content = '';
+
         return $content;
     }
 
-    static function toString($items)
+    public static function toString($items)
     {
-
         $content = "\n";
-        $content .= "# ".strval(MdConfig::$lastInsertMenu++).". Ошибки \n\n";
+        $content .= '# '.(string) (MdConfig::$lastInsertMenu++).". Ошибки \n\n";
         $content .= "<aside class='notice'>\n";
         $content .= 'Описание ошибок';
         $content .= "\n</aside>";
@@ -29,12 +28,10 @@ class Error
 
         $content .= "Код ошибки | Описание\n";
         $content .= "---------- | --------\n";
-        foreach($items as $error) {
-            $content .= $error->code." | ".$error->description."\n";
+        foreach ($items as $error) {
+            $content .= $error->code.' | '.$error->description."\n";
         }
 
         return $content;
-
     }
-
 }

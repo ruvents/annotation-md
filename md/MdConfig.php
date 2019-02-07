@@ -4,27 +4,24 @@ namespace ruvents\slate\md;
 
 class MdConfig
 {
-
-    public $params = [];
-
     public static $lastInsertMenu;
+    public $params = [];
+    private static $_instance;
 
-    private static $_instance = null;
-
-    private function __construct() {
-
+    private function __construct()
+    {
     }
 
-    protected function __clone() {
-
+    private function __clone()
+    {
     }
 
-    static public function getInstance() {
-        if(is_null(self::$_instance))
-        {
+    public static function getInstance()
+    {
+        if (null === self::$_instance) {
             self::$_instance = new self();
         }
+
         return self::$_instance;
     }
-
 }

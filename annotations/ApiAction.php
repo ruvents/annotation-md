@@ -2,13 +2,16 @@
 
 namespace ruvents\slate\annotations;
 
+use ruvents\slate\annotations\Action\Param;
+use ruvents\slate\annotations\Action\Request;
+use ruvents\slate\annotations\Action\Sample;
+
 /**
  * @Annotation
  * @Target("METHOD")
  */
 class ApiAction
 {
-
     /**
      * @var string
      * @Required
@@ -27,19 +30,17 @@ class ApiAction
     public $description;
 
     /**
-     * @var ruvents\slate\annotations\Action\Request
+     * @var Request
      */
     public $request;
 
     /**
-     * @var array ruvents\slate\annotations\Action\Param
+     * @var Param[]
      */
     public $params;
 
     /**
-     * @var array ruvents\slate\annotations\Action\Sample
+     * @var Sample[]
      */
     public $samples;
-
 }
-

@@ -7,9 +7,8 @@ use ruvents\slate\md\Controller as MdController;
 
 class Controller
 {
-
-    public function parse(ApiController $annotation) {
-
+    public function parse(ApiController $annotation)
+    {
         $md = new MdController();
         $md->controller = $annotation->controller;
         $md->title = $annotation->title;
@@ -17,5 +16,4 @@ class Controller
 
         return $md;
     }
-
 }

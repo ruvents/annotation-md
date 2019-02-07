@@ -14,4 +14,3 @@ class ApiController
 
     public $description;
 }
-

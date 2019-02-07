@@ -19,6 +19,4 @@ class ApiError
      * @Required
      */
     public $description;
-
 }
-

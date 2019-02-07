@@ -2,11 +2,8 @@
 
 namespace ruvents\slate\md\Action;
 
-use ruvents\slate\md\MdConfig;
-
 class Param
 {
-
     public $title;
 
     public $type;
@@ -17,61 +14,61 @@ class Param
 
     public $mandatory;
 
-    static $fields = [
-        'title'         => 'Название',
-        'type'          => 'Тип',
-        'description'   => 'Описание',
-        'defaultValue'  => 'Значение по умолчанию',
-        'mandatory'     => 'Обязательно'
+    public static $fields = [
+        'title' => 'Название',
+        'type' => 'Тип',
+        'description' => 'Описание',
+        'defaultValue' => 'Значение по умолчанию',
+        'mandatory' => 'Обязательно',
     ];
 
     public function values()
     {
         $values = [];
-        foreach($this->fields as $key=>$title) {
-            if (!empty($this->$key) ) {
-                $values[$key]=$title;
+        foreach (self::$fields as $key => $title) {
+            if (!empty($this->$key)) {
+                $values[$key] = $title;
             }
         }
+
         return $values;
     }
 
     public static function table($params = [])
     {
-        $content = "";
-        $fields=[];
+        $content = '';
+        $fields = [];
         $allFields = self::$fields;
-        if(sizeof($params)) {
-
+        if (\count($params)) {
             // столбцы таблицы
-            foreach (self::$fields as $field=>$fieldTitle) {
-                foreach($params as $param) {
-                    if( !empty($param->$field) && !in_array($field, $fields) ) {
-                        $fields[]=$field;
+            foreach (self::$fields as $field => $fieldTitle) {
+                foreach ($params as $param) {
+                    if (!empty($param->$field) && !\in_array($field, $fields)) {
+                        $fields[] = $field;
                     }
                 }
             }
 
             // шапка таблицы.
             $th = [];
-            $_th=[];
+            $_th = [];
             array_walk($fields, function ($a) use ($allFields, &$th, &$_th) {
-                $th[]=$allFields[$a];
-                $_th[]=str_repeat("-", mb_strlen($allFields[$a]));
+                $th[] = $allFields[$a];
+                $_th[] = str_repeat('-', mb_strlen($allFields[$a]));
             });
 
             // строки таблицы
             $rows = [];
-            foreach ($params as $param){
-                $row=[];
-                foreach($fields as $field ) {
+            foreach ($params as $param) {
+                $row = [];
+                foreach ($fields as $field) {
                     $row[$field] = !empty($param->$field) ? $param->$field : '';
                 }
-                $rows[] = implode(" | ", $row);
+                $rows[] = implode(' | ', $row);
             }
 
-            $content .= implode(" | ", $th)."\n";
-            $content .= implode(" | ", $_th)."\n";
+            $content .= implode(' | ', $th)."\n";
+            $content .= implode(' | ', $_th)."\n";
             $content .= implode("\n", $rows)."\n";
         }
 
@@ -81,12 +78,12 @@ class Param
     public static function assocArray($params = [])
     {
         $_params = [];
-        if(sizeof($params)) {
+        if (\count($params)) {
             foreach ($params as $param) {
-                $_params[$param->title]="value";
+                $_params[$param->title] = 'value';
             }
         }
+
         return $_params;
     }
-
 }

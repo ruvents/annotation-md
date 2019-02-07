@@ -4,7 +4,6 @@ namespace ruvents\slate\md\Action;
 
 class Sample
 {
-
     public $lang;
 
     public $code;
@@ -14,11 +13,7 @@ class Sample
         $resp = "```{$this->lang}\n";
         $resp .= $this->code."\n";
         $resp .= "```\n";
+
         return $resp;
     }
-
 }
-
-
-
-

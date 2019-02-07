@@ -35,4 +35,3 @@ class Param
      */
     public $mandatory;
 }
-

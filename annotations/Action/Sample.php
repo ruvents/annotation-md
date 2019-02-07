@@ -20,4 +20,3 @@ class Sample
      */
     public $code;
 }
-

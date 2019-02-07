@@ -31,8 +31,5 @@ class ApiObject
      */
     public $description;
 
-
     public $params;
-
 }
-

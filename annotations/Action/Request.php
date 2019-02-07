@@ -26,13 +26,12 @@ class Request
     public $body;
 
     /**
-     * @var array ruvents\slate\annotations\Action\Param
+     * @var Param[]
      */
     public $params;
 
     /**
-     * @var ruvents\slate\annotations\Action\Response
+     * @var Response
      */
     public $response;
 }
-

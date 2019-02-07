@@ -19,4 +19,3 @@ class Response
      */
     public $body;
 }
-

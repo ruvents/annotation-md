@@ -7,14 +7,12 @@ use ruvents\slate\md\Content as MdContent;
 
 class Content
 {
-
-    public function parse(ApiContent $annotation) {
-
+    public function parse(ApiContent $annotation)
+    {
         $md = new MdContent();
         $md->title = $annotation->title;
         $md->description = $annotation->description;
 
         return $md;
     }
-
 }
