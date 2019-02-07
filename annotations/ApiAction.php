@@ -30,17 +30,17 @@ class ApiAction
     public $description;
 
     /**
-     * @var Request
+     * @var \ruvents\slate\annotations\Action\Request
      */
     public $request;
 
     /**
-     * @var Param[]
+     * @var \ruvents\slate\annotations\Action\Param[]
      */
     public $params;
 
     /**
-     * @var Sample[]
+     * @var \ruvents\slate\annotations\Action\Sample[]
      */
     public $samples;
 }
